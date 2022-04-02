@@ -8,24 +8,25 @@
 import UIKit
 
 /// Обработчик событий от Coordinator `Главного экрана`
-public protocol MainScreenCoordinatorOutput: AnyObject { }
+protocol MainScreenCoordinatorOutput: AnyObject { }
 
 /// `Coordinator главного экрана`
-public protocol MainScreenCoordinatorInput {
+protocol MainScreenCoordinatorInput {
     
     /// Обработчик событий от `Главного экрана`
     var moduleOutput: MainScreenCoordinatorOutput? { get set }
 }
 
 /// `Coordinator protocol`
-public typealias MainScreenCoordinatorProtocol = Coordinator & MainScreenCoordinatorInput
+typealias MainScreenCoordinatorProtocol = Coordinator & MainScreenCoordinatorInput
 
-public final class MainScreenCoordinator: MainScreenCoordinatorProtocol {
-
-    // MARK: - Public variables
+// Координатор главного экрана
+final class MainScreenCoordinator: MainScreenCoordinatorProtocol {
+    
+    // MARK: - Internal variables
     
     /// Обработчик событий от Coordinator `Главного экрана`
-    public weak var moduleOutput: MainScreenCoordinatorOutput?
+    weak var moduleOutput: MainScreenCoordinatorOutput?
     
     // MARK: - Private variables
     
@@ -35,17 +36,25 @@ public final class MainScreenCoordinator: MainScreenCoordinatorProtocol {
     
     // MARK: - Initialization
     
+    /// - Parameters:
+    ///   - navigationController: UINavigationController
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
     
-    // MARK: - Public func
+    // MARK: - Internal func
     
-    public func start() {
+    func start() {
+        // Создаем наш модуль главного экрана
         let mainScreenModule = MainScreenAssembly().createModule()
+        
+        // Копируем ссылку в глобальную область видимости, чтобы объект не удалился из памяти
         self.mainScreenModule = mainScreenModule
+        
+        // Подписываемся на события протокола MainScreenModuleOutput
         self.mainScreenModule?.moduleOutput = self
         
+        // Открываем текущий модуль
         navigationController.pushViewController(mainScreenModule, animated: true)
     }
     
@@ -53,10 +62,19 @@ public final class MainScreenCoordinator: MainScreenCoordinatorProtocol {
     
     private func presentDetailCoordinator(_ navigationController: UINavigationController,
                                           color: UIColor?) {
+        // Прокидываем UINavigationController во второй экран (координатор)
         let detailCoordinator = DetailScreenCoordinator(navigationController)
+        
+        // Копируем ссылку в глобальную область видимости, чтобы объект не удалился из памяти
         self.detailCoordinator = detailCoordinator
+        
+        // Передаем с первого экрана ЦВЕТ, на второй экран
         detailCoordinator.colorForView = color
+        
+        // Подписываемся на события протокола DetailScreenCoordinatorOutput
         detailCoordinator.moduleOutput = self
+        
+        // Открываем текущий модуль
         detailCoordinator.start()
     }
 }
@@ -64,7 +82,7 @@ public final class MainScreenCoordinator: MainScreenCoordinatorProtocol {
 // MARK: - MainScreenModuleOutput
 
 extension MainScreenCoordinator: MainScreenModuleOutput {
-    public func userPressedChange(color: UIColor?) {
+    func userPressedChange(color: UIColor?) {
         presentDetailCoordinator(navigationController, color: color)
     }
 }

@@ -8,10 +8,10 @@
 import UIKit
 
 /// Обработчик событий от Coordinator `Детального экрана`
-public protocol DetailScreenCoordinatorOutput: AnyObject { }
+protocol DetailScreenCoordinatorOutput: AnyObject { }
 
 /// `Coordinator детального экрана`
-public protocol DetailScreenCoordinatorInput {
+protocol DetailScreenCoordinatorInput {
     
     /// Обработчик событий от `Детального экрана`
     var moduleOutput: DetailScreenCoordinatorOutput? { get set }
@@ -21,14 +21,14 @@ public protocol DetailScreenCoordinatorInput {
 }
 
 /// `Coordinator protocol`
-public typealias DetailScreenCoordinatorProtocol = Coordinator & DetailScreenCoordinatorInput
+typealias DetailScreenCoordinatorProtocol = Coordinator & DetailScreenCoordinatorInput
 
-public final class DetailScreenCoordinator: DetailScreenCoordinatorProtocol {
+final class DetailScreenCoordinator: DetailScreenCoordinatorProtocol {
     
-    // MARK: - Public variables
+    // MARK: - Internal variables
     
-    public var colorForView: UIColor?
-    public weak var moduleOutput: DetailScreenCoordinatorOutput?
+    var colorForView: UIColor?
+    weak var moduleOutput: DetailScreenCoordinatorOutput?
     
     // MARK: - Private variables
     
@@ -43,7 +43,7 @@ public final class DetailScreenCoordinator: DetailScreenCoordinatorProtocol {
     
     // MARK: - Public func
     
-    public func start() {
+    func start() {
         let detailScreenModule = DetailScreenAssembly().createModule()
         self.detailScreenModule = detailScreenModule
         self.detailScreenModule?.moduleOutput = self
@@ -56,7 +56,7 @@ public final class DetailScreenCoordinator: DetailScreenCoordinatorProtocol {
 // MARK: - DetailScreenModuleOutput
 
 extension DetailScreenCoordinator: DetailScreenModuleOutput {
-    public func didCloseModule() {
+    func didCloseModule() {
         navigationController.popViewController(animated: true)
     }
 }

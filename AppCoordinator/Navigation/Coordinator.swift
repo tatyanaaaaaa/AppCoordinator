@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol Coordinator {
+protocol Coordinator {
     func start()
 }
