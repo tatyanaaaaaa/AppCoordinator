@@ -52,18 +52,16 @@ final class MainScreenView: UIView, MainScreenViewInput {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Public func
+    // MARK: - Internal func
     
-    /// Изменяет цвет она при нажатии
-    public func changeBackgroundColor() {
+    func changeBackgroundColor() {
         backgroundColor = UIColor(red: CGFloat.random(in: 0...1),
                                   green: CGFloat.random(in: 0...1),
                                   blue: CGFloat.random(in: 0...1),
                                   alpha: 1)
     }
     
-    /// Устанавливает текст
-    public func setTitle(text: String) {
+    func setTitle(text: String) {
         titleLable.text = text
     }
     

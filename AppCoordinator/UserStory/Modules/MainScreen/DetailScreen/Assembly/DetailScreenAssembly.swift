@@ -8,11 +8,11 @@
 import UIKit
 
 /// Сборщик `Детального экрана`
-public final class DetailScreenAssembly {
+final class DetailScreenAssembly {
     
     /// Собирает экран
     /// - Returns: собранный модуль
-    public func createModule() -> DetailScreenModule {
+    func createModule() -> DetailScreenModule {
         
         let interactor = DetailScreenInteractor()
         let view = DetailScreenView()

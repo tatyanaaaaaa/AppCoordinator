@@ -8,7 +8,7 @@
 import UIKit
 
 /// события которые отправляем из `ТЕКУЩЕГО МОДУЛЯ` в  `ДРУГОЙ МОДУЛЬ`
-public protocol MainScreenModuleOutput: AnyObject {
+protocol MainScreenModuleOutput: AnyObject {
     
     /// Пользователь нажал `Изменить цвет экрана`
     /// - Parameter color: `Текущий цвет экрана`
@@ -16,21 +16,21 @@ public protocol MainScreenModuleOutput: AnyObject {
 }
 
 /// события которые отправляем из `ДРУГОГО МОДУЛЯ` в  `ТЕКУЩИЙ МОДУЛЬ`
-public protocol MainScreenModuleInput {
+protocol MainScreenModuleInput {
     
     /// Обработчик событий от `Главного экрана`
     var moduleOutput: MainScreenModuleOutput? { get set }
 }
 
 /// Готовый модуль `Главного экрана`
-public typealias MainScreenModule = UIViewController & MainScreenModuleInput
+typealias MainScreenModule = UIViewController & MainScreenModuleInput
 
 /// Главный экран
 final class MainScreenViewController: MainScreenModule {
     
-    // MARK: - Public property
+    // MARK: - Internal property
     
-    public weak var moduleOutput: MainScreenModuleOutput?
+    weak var moduleOutput: MainScreenModuleOutput?
     
     // MARK: - Private property
     

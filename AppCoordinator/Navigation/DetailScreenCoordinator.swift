@@ -41,7 +41,7 @@ final class DetailScreenCoordinator: DetailScreenCoordinatorProtocol {
         self.navigationController = navigationController
     }
     
-    // MARK: - Public func
+    // MARK: - Internal func
     
     func start() {
         let detailScreenModule = DetailScreenAssembly().createModule()

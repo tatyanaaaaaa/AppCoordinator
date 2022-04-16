@@ -8,14 +8,14 @@
 import UIKit
 
 /// события которые отправляем из `ТЕКУЩЕГО МОДУЛЯ` в  `ДРУГОЙ МОДУЛЬ`
-public protocol DetailScreenModuleOutput: AnyObject {
+protocol DetailScreenModuleOutput: AnyObject {
     
     /// Пользователь нажал `Закрыть экран`
     func didCloseModule()
 }
 
 /// события которые отправляем из `ДРУГОГО МОДУЛЯ` в  `ТЕКУЩИЙ МОДУЛЬ`
-public protocol DetailScreenModuleInput {
+protocol DetailScreenModuleInput {
     
     /// Обработчик событий от `Детального экрана`
     var moduleOutput: DetailScreenModuleOutput? { get set }
@@ -25,15 +25,15 @@ public protocol DetailScreenModuleInput {
 }
 
 /// Готовый модуль `Детального экрана`
-public typealias DetailScreenModule = UIViewController & DetailScreenModuleInput
+typealias DetailScreenModule = UIViewController & DetailScreenModuleInput
 
 /// Главный экран
 final class DetailScreenViewController: DetailScreenModule {
     
-    // MARK: - Public property
+    // MARK: - Internal property
     
-    public weak var moduleOutput: DetailScreenModuleOutput?
-    public var colorForView: UIColor? {
+    weak var moduleOutput: DetailScreenModuleOutput?
+    var colorForView: UIColor? {
         didSet {
             moduleView.changeBackground(color: colorForView)
         }

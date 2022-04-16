@@ -8,11 +8,11 @@
 import UIKit
 
 /// Сборщик `Главного экрана`
-public final class MainScreenAssembly {
+final class MainScreenAssembly {
     
     /// Собирает экран
     /// - Returns: собранный модуль
-    public func createModule() -> MainScreenModule {
+    func createModule() -> MainScreenModule {
         
         let interactor = MainScreenInteractor()
         let view = MainScreenView()

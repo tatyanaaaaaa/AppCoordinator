@@ -23,7 +23,7 @@ final class RootApplicationCoordinator: Coordinator {
         self.window = window
     }
     
-    // MARK: - Public func
+    // MARK: - Internal func
     
     func start() {
         // Создаем NavigationController

@@ -53,16 +53,14 @@ final class DetailScreenView: UIView, DetailScreenViewInput {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Public func
+    // MARK: - Internal func
     
-    /// Изменяет цвет она при нажатии
-    public func changeBackground(color: UIColor?) {
+    func changeBackground(color: UIColor?) {
         guard let color = color else { return }
         backgroundColor = color
     }
     
-    /// Устанавливает текст
-    public func setTitle(text: String) {
+    func setTitle(text: String) {
         titleLable.text = text
     }
     
