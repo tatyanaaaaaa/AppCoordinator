@@ -19,9 +19,11 @@ public final class DetailScreenAssembly {
         let factory = DetailScreenFactory()
         
         let presenter = DetailScreenViewController(interactor: interactor,
-                                                 viewAssembly: { view },
-                                                 factory: factory)
+                                                   moduleView: view,
+                                                   factory: factory)
         interactor.output = presenter
+        view.output = presenter
+        factory.output = presenter
         return presenter
     }
 }

@@ -7,31 +7,30 @@
 
 import UIKit
 
-/// Обработчик событий от `Детального Экрана`
+/// события которые отправляем из Factory в Presenter
 protocol DetailScreenFactoryOutput: AnyObject {
     
     /// Был получен готовый текст
-    /// - Parameters:
-    /// - text: готовый, сформированный `текст`
+    /// - Parameter text: готовый, сформированный `текст`
     func didReciveFull(text: String)
 }
 
-/// Фабрика элментов `Главного Экрана`
+/// события которые отправляем из Presenter в Factory
 protocol DetailScreenFactoryInput {
     
     /// Создает секции для отображения
-    /// - Parameters:
-    ///   - text: `вторая часть готового текста`
-    ///   - output: output `DetailScreenFactoryOutput`
-    /// - Returns: секции
-    func createTitle(text: String, output: DetailScreenFactoryOutput)
+    /// - Parameter text: `вторая часть готового текста`
+    func createTitle(text: String)
 }
 
 /// Фабрика элментов `Главного Экрана`
 final class DetailScreenFactory: DetailScreenFactoryInput {
-    func createTitle(text: String, output: DetailScreenFactoryOutput) {
+    
+    weak var output: DetailScreenFactoryOutput?
+    
+    func createTitle(text: String) {
         let fullText = "\(Appearance().title) \(text)"
-        output.didReciveFull(text: fullText)
+        output?.didReciveFull(text: fullText)
     }
 }
 

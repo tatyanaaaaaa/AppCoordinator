@@ -7,27 +7,22 @@
 
 import UIKit
 
-/// Обработчик событий от `View`
+/// события которые отправляем из View в Presenter
 protocol DetailScreenViewOutput: AnyObject {
     
     /// Кнопка была нажата пользователем
     func presentNewScreenButtonAction()
 }
 
-/// `View для экрана MainScreenView`
+/// события которые отправляем из Presenter в View
 protocol DetailScreenViewInput: AnyObject {
     
-    /// Обработчик событий от view экрана MainScreenView
-    var output: DetailScreenViewOutput? { get set }
-    
     /// Изменить цвет фона на Рандомный
-    /// - Parameters:
-    /// - color: Цвет для`экрана`
+    /// - Parameter color: Цвет для`экрана`
     func changeBackground(color: UIColor?)
     
     /// Устанавливает текст
-    /// - Parameters:
-    ///   - text: текс для `titleLable`
+    /// - Parameter text: текс для `titleLable`
     func setTitle(text: String)
 }
 

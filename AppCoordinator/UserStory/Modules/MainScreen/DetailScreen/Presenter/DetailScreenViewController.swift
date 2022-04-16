@@ -7,19 +7,20 @@
 
 import UIKit
 
-/// Обработчик событий от `Детального экрана`
+/// события которые отправляем из `ТЕКУЩЕГО МОДУЛЯ` в  `ДРУГОЙ МОДУЛЬ`
 public protocol DetailScreenModuleOutput: AnyObject {
     
     /// Пользователь нажал `Закрыть экран`
     func didCloseModule()
 }
 
-/// `Модуль главного экрана`
+/// события которые отправляем из `ДРУГОГО МОДУЛЯ` в  `ТЕКУЩИЙ МОДУЛЬ`
 public protocol DetailScreenModuleInput {
     
     /// Обработчик событий от `Детального экрана`
     var moduleOutput: DetailScreenModuleOutput? { get set }
     
+    /// Цвет для вью
     var colorForView: UIColor? { get set }
 }
 
@@ -41,20 +42,19 @@ final class DetailScreenViewController: DetailScreenModule {
     // MARK: - Private property
     
     private let interactor: DetailScreenInteractorInput
-    private let viewAssembly: () -> UIView & DetailScreenViewInput
-    private lazy var moduleView: UIView & DetailScreenViewInput = viewAssembly()
+    private let moduleView: UIView & DetailScreenViewInput
     private let factory: DetailScreenFactoryInput
     
     /// Инициализатор
     /// - Parameters:
     ///   - interactor: интерактор
-    ///   - viewAssembly: вью
+    ///   - moduleView: вью
     ///   - factory: фабрика
     init(interactor: DetailScreenInteractorInput,
-         viewAssembly: @escaping () -> UIView & DetailScreenViewInput,
+         moduleView: UIView & DetailScreenViewInput,
          factory: DetailScreenFactoryInput) {
         self.interactor = interactor
-        self.viewAssembly = viewAssembly
+        self.moduleView = moduleView
         self.factory = factory
         super.init(nibName: nil, bundle: nil)
     }
@@ -72,7 +72,6 @@ final class DetailScreenViewController: DetailScreenModule {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        moduleView.output = self
         interactor.getContent()
         title = Appearance().title
     }
@@ -82,7 +81,7 @@ final class DetailScreenViewController: DetailScreenModule {
 
 extension DetailScreenViewController: DetailScreenInteractorOutput {
     func didReceive(text: String) {
-        factory.createTitle(text: text, output: self)
+        factory.createTitle(text: text)
     }
 }
 

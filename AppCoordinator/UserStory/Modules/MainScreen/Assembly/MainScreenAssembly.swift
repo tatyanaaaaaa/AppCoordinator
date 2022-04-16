@@ -19,9 +19,11 @@ public final class MainScreenAssembly {
         let factory = MainScreenFactory()
         
         let presenter = MainScreenViewController(interactor: interactor,
-                                                 viewAssembly: { view },
+                                                 moduleView: view,
                                                  factory: factory)
         interactor.output = presenter
+        view.output = presenter
+        factory.output = presenter
         return presenter
     }
 }

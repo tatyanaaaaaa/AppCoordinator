@@ -7,16 +7,15 @@
 
 import UIKit
 
-/// Обработчик событий от `Главного экрана`
+/// события которые отправляем из `ТЕКУЩЕГО МОДУЛЯ` в  `ДРУГОЙ МОДУЛЬ`
 public protocol MainScreenModuleOutput: AnyObject {
     
     /// Пользователь нажал `Изменить цвет экрана`
-    /// - Parameters:
-    ///   - color: `Текущий цвет экрана`
+    /// - Parameter color: `Текущий цвет экрана`
     func userPressedChange(color: UIColor?)
 }
 
-/// `Модуль главного экрана`
+/// события которые отправляем из `ДРУГОГО МОДУЛЯ` в  `ТЕКУЩИЙ МОДУЛЬ`
 public protocol MainScreenModuleInput {
     
     /// Обработчик событий от `Главного экрана`
@@ -36,20 +35,19 @@ final class MainScreenViewController: MainScreenModule {
     // MARK: - Private property
     
     private let interactor: MainScreenInteractorInput
-    private let viewAssembly: () -> UIView & MainScreenViewInput
-    private lazy var moduleView: UIView & MainScreenViewInput = viewAssembly()
+    private let moduleView: UIView & MainScreenViewInput
     private let factory: MainScreenFactoryInput
     
     /// Инициализатор
     /// - Parameters:
     ///   - interactor: интерактор
-    ///   - viewAssembly: вью
+    ///   - moduleView: вью
     ///   - factory: фабрика
     init(interactor: MainScreenInteractorInput,
-         viewAssembly: @escaping () -> UIView & MainScreenViewInput,
+         moduleView: UIView & MainScreenViewInput,
          factory: MainScreenFactoryInput) {
         self.interactor = interactor
-        self.viewAssembly = viewAssembly
+        self.moduleView = moduleView
         self.factory = factory
         super.init(nibName: nil, bundle: nil)
     }
@@ -67,7 +65,6 @@ final class MainScreenViewController: MainScreenModule {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        moduleView.output = self
         interactor.getContent()
         title = Appearance().title
     }
@@ -77,7 +74,7 @@ final class MainScreenViewController: MainScreenModule {
 
 extension MainScreenViewController: MainScreenInteractorOutput {
     func didReceive(text: String) {
-        factory.createTitle(text: text, output: self)
+        factory.createTitle(text: text)
     }
 }
 

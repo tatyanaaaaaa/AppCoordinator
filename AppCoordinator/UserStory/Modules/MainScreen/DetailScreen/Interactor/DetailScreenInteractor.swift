@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// Обработчик событий от интерактора
+/// события которые отправляем из Interactor в Presenter
 protocol DetailScreenInteractorOutput: AnyObject {
     
     /// `Были получены данные`
@@ -15,7 +15,7 @@ protocol DetailScreenInteractorOutput: AnyObject {
     func didReceive(text: String)
 }
 
-/// Интерактор `Главный экран`
+/// события которые отправляем из Presenter в Interactor
 protocol DetailScreenInteractorInput {
     
     /// Загрузить контент
